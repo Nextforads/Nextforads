@@ -1,0 +1,41 @@
+# Importando as bibliotecas
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Criando um conjunto de dados de exemplo
+# Neste exemplo, temos duas classes: 0 e 1, e duas características.
+data = {
+    'feature1': [5, 20, 15, 25, 10, 30, 40, 50, 45, 60],
+    'feature2': [1, 3, 2, 4, 1, 5, 6, 8, 7, 9],
+    'label': [0, 1, 0, 1, 0, 1, 1, 1, 0, 1]
+}
+
+# Convertendo os dados para um DataFrame
+df = pd.DataFrame(data)
+
+# Separando os dados em características (X) e rótulos (y)
+X = df[['feature1', 'feature2']]
+y = df['label']
+
+# Dividindo o conjunto de dados em treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Criando o modelo de Árvore de Decisão
+model = DecisionTreeClassifier()
+
+# Treinando o modelo
+model.fit(X_train, y_train)
+
+# Fazendo previsões com o modelo treinado
+y_pred = model.predict(X_test)
+
+# Avaliando a precisão do modelo
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Acurácia do modelo: {accuracy * 100:.2f}%')
+
+# Testando uma nova previsão
+new_data = [[35, 4]]  # Substitua pelos valores que você deseja prever
+new_prediction = model.predict(new_data)
+print(f'Previsão para os novos dados {new_data}: Classe {new_prediction[0]}')
